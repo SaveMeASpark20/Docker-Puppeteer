@@ -1,22 +1,26 @@
-
-
-# Use an official Node.js image with a Chromium-compatible environment
+# Use Puppeteer's official image
 FROM ghcr.io/puppeteer/puppeteer:latest
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available) to install dependencies
-COPY package*.json ./
+# Copy package.json and package-lock.json first (for better caching)
+COPY package.json package-lock.json ./
 
-# Install only production dependencies
+# Fix permissions for the /app directory
+RUN chown -R pptruser:pptruser /app
+
+# Switch to the Puppeteer user (pre-configured in this image)
+USER pptruser
+
+# Install dependencies (only production ones)
 RUN npm install --omit=dev
 
-# Copy the rest of the application files
+# Copy the rest of the app files
 COPY . .
 
-# Expose the port (Render will auto-detect it if using Express)
+# Expose the necessary port
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
