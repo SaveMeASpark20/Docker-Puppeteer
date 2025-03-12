@@ -9,8 +9,8 @@ const scrapeLogic = async (res) => {
       "--single-process",
       "--no-zygote",
     ],
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium", // Explicitly set path
-    headless: "new", // Recommended for latest Puppeteer versions
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium", // Use correct path
+    headless: "new",
   });
 
   try {
