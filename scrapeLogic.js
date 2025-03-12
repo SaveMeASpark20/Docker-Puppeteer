@@ -10,6 +10,7 @@ const scrapeLogic = async (res) => {
       "--no-zygote",
     ],
     executablePath: puppeteer.executablePath(),
+    headless: true
   });
   try {
     const page = await browser.newPage();

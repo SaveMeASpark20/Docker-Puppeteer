@@ -1,11 +1,22 @@
-FROM ghcr.io/puppeteer/puppeteer:24.4.0
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
-WORKDIR /usr/src/app
+# Use an official Node.js image with a Chromium-compatible environment
+FROM ghcr.io/puppeteer/puppeteer:latest
 
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json (if available) to install dependencies
 COPY package*.json ./
-RUN npm ci
+
+# Install only production dependencies
+RUN npm install --omit=dev
+
+# Copy the rest of the application files
 COPY . .
-CMD [ "node", "index.js" ]
+
+# Expose the port (Render will auto-detect it if using Express)
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]
