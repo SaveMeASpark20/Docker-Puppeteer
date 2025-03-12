@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 require("dotenv").config();
 
 const scrapeLogic = async (res) => {
@@ -10,7 +10,7 @@ const scrapeLogic = async (res) => {
       "--no-zygote",
     ],
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium", // Use correct path
-    headless: "new",
+    headless: "true",
   });
 
   try {
