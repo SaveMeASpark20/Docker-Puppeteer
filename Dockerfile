@@ -1,14 +1,5 @@
-# Use Puppeteer's official image
+# Use Puppeteer's official image (Chrome is already installed)
 FROM ghcr.io/puppeteer/puppeteer:latest
-
-# Switch to root to install packages
-USER root
-
-# Install dependencies and Google Chrome
-RUN apt-get update && apt-get install -y google-chrome-stable
-
-# Switch back to Puppeteer user
-USER pptruser
 
 # Set the working directory
 WORKDIR /app
