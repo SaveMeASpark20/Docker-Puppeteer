@@ -20,9 +20,10 @@ import puppeteer from 'puppeteer';
   await page.click(searchResultSelector);
 
   // Locate the full title with a unique string
-  const textSelector = await page.waitForSelector(
-    'text/Customize and automate',
-  );
+  await page.evaluate((selector) => {
+    document.querySelector(selector)?.click();
+  }, searchResultSelector);
+
   const fullTitle = await textSelector?.evaluate(el => el.textContent);
 
   // Print the full title
